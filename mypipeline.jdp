@@ -25,6 +25,13 @@ pipeline {
 
         stage('TEST') {
             steps {
+                dir('backend') {
+                sh '''mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \\
+  -Dsonar.projectKey=test-project \\
+  -Dsonar.projectName=\'test-project\' \\
+  -Dsonar.host.url=http://51.44.25.157:9000 \\
+  -Dsonar.token=sqp_03c572394d694e4254f52d464c45cb6d2f9beb71'''
+                }
                 echo 'TEST SUCCESS'
             }
         }
