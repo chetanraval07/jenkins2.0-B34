@@ -25,7 +25,10 @@ pipeline {
 
         stage('TEST') {
             steps {
-                withSonarQubeEnv(credentialsId: 'sonar-cred') {
+                withSonarQubeEnv(
+                    installationName: 'SonarQube',
+                    credentialsId: 'sonar-cred'
+                ) {
                     dir('backend') {
                         sh '''mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
   -Dsonar.projectKey=test-project \
@@ -33,6 +36,7 @@ pipeline {
 '''
                     }
                 }
+
                 echo 'TEST SUCCESS'
             }
         }
@@ -44,3 +48,4 @@ pipeline {
         }
     }
 }
+
