@@ -37,7 +37,7 @@ pipeline {
                     }
                 }
 
-                echo 'TEST SUCCESS'
+                echo 'TEST  SUCCESS'
             }
         }
         
