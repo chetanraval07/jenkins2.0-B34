@@ -52,7 +52,7 @@ pipeline {
                 echo 'QUALITY-PASSED'                 
 	    }    
         }
-        stage('CONTINUOS-DELIVERY') {
+        stage('CONTINUOS DELIVERY') {
             steps {
                 sh '''
 aws s3 cp backend/target/student-registration-backend-0.0.1-SNAPSHOT.jar \
