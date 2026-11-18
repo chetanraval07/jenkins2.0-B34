@@ -54,7 +54,10 @@ pipeline {
         }
         stage('CONTINUOS-DELIVERY') {
             steps {
-                sh 'aws  s3 cp /backend/target/student-registration-backend-0.0.1-SNAPSHOT.jar s3://my-jenkins-bucxx-b34/student-app.jar'
+                sh '''
+aws s3 cp backend/target/student-registration-backend-0.0.1-SNAPSHOT.jar \
+s3://my-jenkins-bucxx-b34/student-app.jar
+'''
             }
         }
     }
