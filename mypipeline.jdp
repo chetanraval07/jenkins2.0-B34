@@ -19,7 +19,7 @@ pipeline {
                     sh 'mvn clean package -DskipTests'
                 }
 
-                echo 'BUILD SUCCESS'
+                echo 'BUILD-SUCCESS'
             }
         }
 
