@@ -8,14 +8,14 @@ terraform {
 }
 
 provider "aws" {
-  region = "eu-central-1" // Specify the AWS region
+  region = "eu-west-3" // Specify the AWS region
 }
 data "aws_vpc" "default" { // Fetch default VPC
   default = true
 }
 variable "cluster_name" { // Variable for cluster name
   type    = string
-  default = "my-cluster"
+  default = "my-cluster34"
 
 }
 
@@ -70,7 +70,7 @@ resource "aws_iam_role_policy_attachment" "node_policies" { // Attach necessary 
   ], count.index)
 }
 
-resource "aws_eks_cluster" "mycluster" {       // EKS Cluster resource
+resource "aws_eks_cluster" "mycluster34" {       // EKS Cluster resource
   name     = var.cluster_name                  // Cluster name
   role_arn = aws_iam_role.eks_cluster_role.arn // IAM role for the cluster
 
@@ -85,7 +85,7 @@ resource "aws_eks_cluster" "mycluster" {       // EKS Cluster resource
 
 
 resource "aws_eks_node_group" "nodegroup" { // EKS Node Group resource
-  cluster_name    = aws_eks_cluster.mycluster.name
+  cluster_name    = aws_eks_cluster.mycluster34.name
   node_group_name = "default-node-group"         // Name of the node group
   node_role_arn   = aws_iam_role.node_role.arn   // IAM role for the node group
   subnet_ids      = data.aws_subnets.default.ids // Use all subnets in the default VPC
@@ -104,11 +104,11 @@ resource "aws_eks_node_group" "nodegroup" { // EKS Node Group resource
 }
 
 output "cluster_name" { // Output for cluster name
-  value = aws_eks_cluster.mycluster.name
+  value = aws_eks_cluster.mycluster34.name
 }
 
 output "cluster_endpoint" { //  Output for cluster endpoint
-  value = aws_eks_cluster.mycluster.endpoint
+  value = aws_eks_cluster.mycluster34.endpoint
 }
 
 
