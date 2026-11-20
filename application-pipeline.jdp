@@ -4,14 +4,15 @@ pipeline {
 
     stages {
 
-        stage('PULL STAGE') {
+        stage('PULL') {
             steps {
-                git branch: 'master',
-                    url: 'https://github.com/chetanraval07/jenkins2.0-B34.git'
+                git 'https://github.com/chetanraval07/jenkins2.0-B34.git'
+                echo 'PULL SUCCESS'
             }
         }
 
-        stage('FRONTEND-DOCKER-BUILD') {
+ 
+      stage('FRONTEND-DOCKER-BUILD') {
             steps {
                 sh '''
                     cd frontend
