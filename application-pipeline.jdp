@@ -37,3 +37,89 @@ pipeline {
                         usernameVariable: 'DOCKER_USER',
                         passwordVariable: 'DOCKER_PASS'
                     )
+                ]) {
+                    sh '''
+                        set +x
+
+                        echo "$DOCKER_PASS" | docker login \
+                            -u "$DOCKER_USER" --password-stdin
+
+                        docker push shivansh7310/easy-frontend:latest
+
+                        docker push shivansh7310/easy-backend:latest
+
+                        docker logout
+                    '''
+                }
+            }
+        }
+
+        stage('DOCKER-CLEAN') {
+            steps {
+                sh '''
+                    docker rmi -f shivansh7310/easy-frontend:latest || true
+
+                    docker rmi -f shivansh7310/easy-backend:latest || true
+                '''
+            }
+        }
+
+        stage('DEPLOY') {
+            steps {
+                sh '''
+                    echo "Connecting to AWS EKS..."
+
+                    aws eks update-kubeconfig \
+                        --region eu-west-3 \
+                        --name my-cluster34
+
+                    echo "Checking EKS Nodes..."
+
+                    kubectl get nodes
+
+                    echo "Deploying Backend..."
+
+                    kubectl apply -f backend/k8s/
+
+                    echo "Deploying Frontend..."
+
+                    kubectl apply -f frontend/k8s/
+
+                    echo "Checking Deployments..."
+
+                    kubectl get deployments
+
+                    echo "Checking Pods..."
+
+                    kubectl get pods
+
+                    echo "Checking Services..."
+
+                    kubectl get services
+
+                    echo "Waiting for Backend..."
+
+                    kubectl rollout status deployment/student-app \
+                        --timeout=180s
+
+                    echo "Waiting for Frontend..."
+
+                    kubectl rollout status deployment/frontend \
+                        --timeout=180s
+
+                    echo "Deployment Completed Successfully!"
+                '''
+        }
+    }
+
+    post {
+        success {
+
+        failure {
+            echo 'Pipeline failed. Check Jenkins Console Output.'
+    }
+}
+        }
+        }
+            echo 'Application successfully deployed on AWS EKS!'
+
