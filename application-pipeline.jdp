@@ -82,7 +82,7 @@ pipeline {
 
                     echo "Deploying Frontend..."
 
-                    kubectl apply -f frontend/k8s/
+                    kubectl apply -f backend/k8s/
 
                     echo "Checking Deployments..."
 
