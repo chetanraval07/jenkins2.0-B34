@@ -16,7 +16,8 @@ spec:
     spec:
       containers:
       - name: student-app-container
-        image: <ECR-IMAGE-URL>
+        image: shivansh7310/easy-backend:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
         resources:
@@ -26,3 +27,4 @@ spec:
           limits:
             cpu: "500m"
             memory: "200Mi"
+
