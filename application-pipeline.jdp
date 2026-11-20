@@ -109,17 +109,22 @@ pipeline {
 
                     echo "Deployment Completed Successfully!"
                 '''
+            }
         }
     }
 
     post {
+
         success {
+            echo 'Application successfully deployed on AWS EKS!'
+        }
 
         failure {
             echo 'Pipeline failed. Check Jenkins Console Output.'
+        }
+
+        always {
+            echo 'Jenkins Pipeline Execution Completed.'
+        }
     }
 }
-        }
-        }
-            echo 'Application successfully deployed on AWS EKS!'
-
